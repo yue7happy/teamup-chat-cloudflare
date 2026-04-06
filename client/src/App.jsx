@@ -1367,6 +1367,7 @@ function App() {
   }, [user])
 
   if (!user) {
+    console.log('渲染开始 - 登录界面')
     return (
       <div className="login-container">
         <div className="login-box">
@@ -1400,6 +1401,9 @@ function App() {
       </div>
     )
   }
+
+  console.log('渲染开始 - 主界面')
+  console.log('rooms:', rooms)
 
   return (
     <div className="app-container">

@@ -96,10 +96,16 @@ function App() {
     
     
     
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      setUser(parsedUser)
-      
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        const parsedUser = JSON.parse(storedUser)
+        setUser(parsedUser)
+      } catch (error) {
+        console.error('解析用户信息失败:', error)
+        // 清除损坏的存储数据
+        localStorage.removeItem('user')
+        sessionStorage.removeItem('user')
+      }
     }
     
     // 检查是否已经有 Peer 实例

@@ -1,0 +1,972 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 登录页面 */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-box h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  background-color: white;
+}
+
+.error {
+  color: #ea4335;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+.btn-secondary {
+  padding: 10px 16px;
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #e8eaed;
+  border-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+.login-hint {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 主应用 */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: white;
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.app-header h1 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+}
+
+.btn-sync {
+  padding: 8px 16px;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-sync:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+.btn-sync:disabled {
+  background: #9aa0a6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info span {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+.modal h3 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal .hint {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.modal-actions .btn-primary,
+.modal-actions .btn-secondary {
+  width: auto;
+  padding: 10px 20px;
+}
+
+/* 主内容区 */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.content-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.content-right {
+  width: 320px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+/* 房间列表 */
+.rooms-section {
+  margin-bottom: 30px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.section-header h2 {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.room-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.create-room-form {
+  display: flex;
+  gap: 10px;
+}
+
+.create-room-form input {
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  width: 220px;
+  background-color: #f8f9fa;
+}
+
+.create-room-form input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  background-color: white;
+}
+
+.create-room-form button {
+  width: auto;
+  padding: 12px 20px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.room-card {
+  padding: 24px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.room-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.room-card.active {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: scale(1.02);
+}
+
+.room-info h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.room-status {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.room-users-count {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.default-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.delete-room-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  line-height: 1;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-room-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+.interaction-hint {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* 当前房间 */
+.current-room-section {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.current-room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.current-room-header h2 {
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+.voice-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.room-status-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.room-status-controls span {
+  font-weight: 500;
+  color: #333;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.status-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.status-btn.active {
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.room-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.room-users-list h3 {
+  margin-bottom: 0;
+  color: #333;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.btn-kick {
+  padding: 6px 12px;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-kick:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+.kick-user-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.kick-user-select:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  background-color: white;
+}
+
+.room-users-list ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.room-users-list li {
+  padding: 10px 20px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.room-users-list li:hover {
+  background: #e8eaed;
+  transform: translateY(-1px);
+}
+
+.room-users-list li.me {
+  background: #1a73e8;
+  color: white;
+  border-color: #1a73e8;
+}
+
+/* 成员管理 */
+.members-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.members-header h2 {
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-user-btn {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  min-width: auto;
+  width: auto;
+}
+
+.members-list h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.members-list ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.members-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.members-list li:hover {
+  background: #e8eaed;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.members-list li.me {
+  background: #1a73e8;
+  color: white;
+  border-color: #1a73e8;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.member-username {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.member-status {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.member-status.online {
+  background: #34a853;
+  color: white;
+}
+
+.member-status.offline {
+  background: #9aa0a6;
+  color: white;
+}
+
+.member-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.member-role {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.member-role.owner {
+  background: #34a853;
+  color: white;
+}
+
+.member-role.admin {
+  background: #fbbc05;
+  color: #333;
+}
+
+.member-role.user {
+  background: #1a73e8;
+  color: white;
+}
+
+.member-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-secondary.small {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-secondary.small.danger {
+  background: #ea4335;
+  color: white;
+  border-color: #ea4335;
+}
+
+.btn-secondary.small.danger:hover {
+  background: #d33729;
+  border-color: #d33729;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 20px;
+    flex-direction: column;
+  }
+
+  .content-left {
+    order: 2;
+  }
+
+  .content-right {
+    order: 1;
+    width: 100%;
+    position: static;
+    max-height: none;
+    margin-bottom: 20px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .room-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .create-room-form {
+    width: 100%;
+  }
+
+  .create-room-form input {
+    flex: 1;
+    width: auto;
+  }
+
+  .rooms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .room-status-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-buttons {
+    justify-content: center;
+  }
+
+  .app-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 15px 20px;
+  }
+
+  .login-box {
+    padding: 30px;
+    margin: 20px;
+  }
+
+  .modal {
+    margin: 20px;
+    padding: 25px;
+  }
+
+  .current-room-section {
+    padding: 20px;
+  }
+}
+
+/* 聊天功能 */
+.chat-section {
+  margin-top: 30px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 20px;
+}
+
+.chat-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.chat-messages {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.message.own {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.message.own .message-header {
+  flex-direction: row-reverse;
+}
+
+.message-username {
+  font-weight: 500;
+}
+
+.message-content {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  max-width: 100%;
+  align-self: flex-start;
+}
+
+.message:not(.own) .message-content {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 4px;
+}
+
+.message.own .message-content {
+  background: #dcf8c6;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 24px;
+  font-size: 14px;
+  background: #f8f9fa;
+  resize: none;
+  min-height: 48px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  background: white;
+}
+
+.chat-input button {
+  padding: 12px 20px;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.chat-input button:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+/* 响应式聊天 */
+@media (max-width: 768px) {
+  .chat-messages {
+    max-height: 200px;
+  }
+  
+  .message {
+    max-width: 85%;
+  }
+  
+  .chat-input input {
+    padding: 12px 16px;
+  }
+  
+  .chat-input button {
+    padding: 10px 16px;
+  }
+}
+
+/* 全局禁止选中文字 */
+* {
+  user-select: none;
+}
+
+/* 允许输入框和文本域选中文字 */
+input, textarea {
+  user-select: text;
+}
+
+/* 允许聊天消息选中文字 */
+.chat-message, .message-text {
+  user-select: text;
+}
+
+/* 允许弹窗输入框选中文字 */
+.modal-input {
+  user-select: text;
+}
+
+/* 手机端适配（宽度小于 768px） */
+@media (max-width: 768px) {
+  /* 房间卡片占满宽度 */
+  .room-card, .room-list > div {
+    width: 100% !important;
+    margin: 8px 0 !important;
+  }
+  
+  /* 按钮更大，方便点击 */
+  button, .btn {
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    min-height: 44px !important;
+  }
+  
+  /* 输入框适配 */
+  input, select {
+    font-size: 16px !important;
+    padding: 10px !important;
+  }
+  
+  /* 容器边距 */
+  .container, .app-container {
+    padding: 12px !important;
+  }
+  
+  /* 字体大小 */
+  body, .text {
+    font-size: 14px !important;
+  }
+  
+  /* 标题 */
+  h1, h2, .title {
+    font-size: 20px !important;
+  }
+}

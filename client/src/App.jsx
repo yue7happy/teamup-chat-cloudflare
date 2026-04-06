@@ -449,6 +449,7 @@ function App() {
       if (data.success) {
         setUser(data.user)
         fetchUsers()
+        window.location.href = '/'
       } else {
         setError(data.message || '登录失败')
       }

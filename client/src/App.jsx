@@ -455,11 +455,18 @@ function App() {
       })
       const data = await res.json()
       
-      if (data.success) {
+      if (data.success && data.user) {
         setUser(data.user)
         // 保存用户信息到 localStorage 和 sessionStorage
-        localStorage.setItem('user', JSON.stringify(data.user))
-        sessionStorage.setItem('user', JSON.stringify(data.user))
+        try {
+          const userJson = JSON.stringify(data.user)
+          if (userJson) {
+            localStorage.setItem('user', userJson)
+            sessionStorage.setItem('user', userJson)
+          }
+        } catch (error) {
+          console.error('存储用户信息失败:', error)
+        }
         fetchUsers()
         window.location.href = '/'
       } else {

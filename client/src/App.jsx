@@ -1070,7 +1070,9 @@ function App() {
         socket.close()
       }
       
-      const newSocket = io('http://localhost:3001', {
+      // 使用 API_URL 的根地址作为 WebSocket 连接地址
+      const wsUrl = API_URL.replace(/\/api$/, '')
+      const newSocket = io(wsUrl, {
         transports: ['websocket'],
         reconnection: true,
         reconnectionAttempts: 5,

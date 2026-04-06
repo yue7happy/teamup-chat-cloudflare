@@ -87,8 +87,11 @@ function App() {
   useEffect(() => {
     
     
-    // 立即从sessionStorage读取上次的用户和开麦状 ?
-    const storedUser = sessionStorage.getItem('user')
+    // 立即从localStorage和sessionStorage读取上次的用户和开麦状 ?
+    let storedUser = localStorage.getItem('user')
+    if (!storedUser) {
+      storedUser = sessionStorage.getItem('user')
+    }
     const storedMicState = sessionStorage.getItem('isMicOn')
     
     
@@ -448,6 +451,9 @@ function App() {
       
       if (data.success) {
         setUser(data.user)
+        // 保存用户信息到 localStorage 和 sessionStorage
+        localStorage.setItem('user', JSON.stringify(data.user))
+        sessionStorage.setItem('user', JSON.stringify(data.user))
         fetchUsers()
         window.location.href = '/'
       } else {
@@ -787,7 +793,8 @@ function App() {
     }
     // 关闭所有连 ?
     Object.values(connections).forEach(call => call.close())
-    // 清除sessionStorage中的用户信息和房间信 ?
+    // 清除localStorage和sessionStorage中的用户信息和房间信 ?
+    localStorage.removeItem('user')
     sessionStorage.removeItem('user')
     sessionStorage.removeItem('currentRoom')
     sessionStorage.removeItem('isMicOn')
